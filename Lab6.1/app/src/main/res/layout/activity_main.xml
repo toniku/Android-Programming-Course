@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set reminder time"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"/>
+
+    <TimePicker
+        android:id="@+id/timePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:timePickerMode="spinner"
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set reminder text"
+
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"/>
+
+    <EditText
+        android:id="@+id/reminder_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Write here your reminder text"
+        android:layout_gravity="center"/>
+
+    <Button
+        android:id="@+id/done_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DONE"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"/>
+
+</LinearLayout>
