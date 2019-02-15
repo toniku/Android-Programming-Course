@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+    <EditText
+        android:id="@+id/text_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+    android:id="@+id/LinearLayout1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center">
+
+    <Button
+        android:id="@+id/english_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ENGLISH" />
+    <Button
+        android:id="@+id/sverige_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SVERIGE" />
+</LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LinearLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <Button
+            android:id="@+id/suomeksi_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SUOMEKSI" />
+        <Button
+            android:id="@+id/surprise_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SURPRISE" />
+    </LinearLayout>
+    <TextView
+        android:id="@+id/hello_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textSize="35dp"
+        />
+
+</LinearLayout>
