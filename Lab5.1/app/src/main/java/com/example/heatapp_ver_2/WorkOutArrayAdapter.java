@@ -13,9 +13,9 @@ import java.util.ArrayList;
 
 public class WorkOutArrayAdapter extends ArrayAdapter<WorkOutType> {
 
-    static final int VIEW_TYPE_WORKOUT = 0;
-    static final int VIEW_TYPE_PAUSE = 1;
-    static final int VIEW_TYPE_COUNT = 2;
+    private static final int VIEW_TYPE_WORKOUT = 0;
+    private static final int VIEW_TYPE_PAUSE = 1;
+    private static final int VIEW_TYPE_COUNT = 2;
 
     public WorkOutArrayAdapter(Context context, ArrayList<WorkOutType> workOutTypes) {
         super(context, 0, workOutTypes);

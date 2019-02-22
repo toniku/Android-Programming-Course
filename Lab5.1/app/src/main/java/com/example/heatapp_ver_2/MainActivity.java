@@ -1,10 +1,12 @@
 package com.example.heatapp_ver_2;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -13,58 +15,36 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    static final int ADD_NEW_EXERCISE_REQ_ID = 311;
-    public static String EXTRA_MESSAGE;
-    int currentWorkoutIndex = 0;
-    ArrayList<WorkOutType> workouts = new ArrayList<>();
+    ArrayList<WorkOutType> workouts = null;
     ListView listView = null;
-    int minutes = 0;
-    int seconds = 0;
+    WorkOutArrayAdapter adapter = null;
+    TextView noPartsAdded, total_length = null;
+    private Button startWorkout = null;
+    static final int ADD_NEW_EXERCISE_REQ_ID = 311;
+    static String EXTRA_MESSAGE;
+    int minutes, seconds, timeInSeconds, minutesTemp, secondsTemp = 0;
+    private String filename = "savedArrayList";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        findViewById(R.id.start_workout).setOnClickListener(this);
+        startWorkout = findViewById(R.id.start_workout);
+        noPartsAdded = findViewById(R.id.no_parts_text);
+        total_length = findViewById(R.id.total_length_text);
+        startWorkout.setOnClickListener(this);
         listView = findViewById(R.id.list_view);
-    }
-
-    private void lengthCount() {
-        final WorkOutType data = workouts.get(currentWorkoutIndex);
-        int timeInSeconds = data.getSeconds();
-        int minutesTemp = (timeInSeconds % 3600) / 60;
-        int secondsTemp = timeInSeconds % 60;
-        minutes += minutesTemp;
-        seconds += secondsTemp;
-        if (seconds > 59) {
-            minutes++;
-            seconds = seconds - 60;
-        }
-        currentWorkoutIndex++;
-    }
-
-    private void saveData() {
-        SharedPreferences sharedPreferences = getSharedPreferences("shared prefrences", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(workouts);
-        editor.putString("task list", json);
-        editor.apply();
-    }
-
-    private void loadData() {
-        SharedPreferences sharedPreferences = getSharedPreferences("shared prefrences", MODE_PRIVATE);
-        Gson gson = new Gson();
-        String json = sharedPreferences.getString("task list", null);
-        Type type = new TypeToken<ArrayList<ExampleItem>>() {}.getType();
+        loadData();
     }
 
     @Override
@@ -79,8 +59,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
-        WorkOutArrayAdapter adapter = new WorkOutArrayAdapter(this, workouts);
+        adapter = new WorkOutArrayAdapter(this, workouts);
         listView.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        saveData();
     }
 
     @Override
@@ -88,17 +74,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == ADD_NEW_EXERCISE_REQ_ID && resultCode == RESULT_OK) {
-            WorkOutType workouttype = (WorkOutType) data.getSerializableExtra("WORKOUT");
+            WorkOutType workouttype = null;
+            if (data != null) {
+                workouttype = (WorkOutType) data.getSerializableExtra("WORKOUT");
+            }
             workouts.add(workouttype);
-            if (workouttype != null) {
-                Button startWorkout = findViewById(R.id.start_workout);
+            if (!startWorkout.isEnabled()) {
                 startWorkout.setEnabled(true);
             }
-            TextView noPartsAdded = findViewById(R.id.no_parts_text);
             noPartsAdded.setText("");
-            TextView total_length = findViewById(R.id.total_length_text);
             lengthCount();
-            total_length.setText("Total length " + minutes + " minutes " + seconds + " seconds.");
         }
     }
 
@@ -115,6 +100,91 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Intent intent = new Intent(this, CreateWorkOut.class);
             startActivityForResult(intent, ADD_NEW_EXERCISE_REQ_ID);
         }
+        if (item.getItemId() == R.id.menu_clear_button) {
+            openDialog();
+        }
         return true;
+    }
+
+    private void saveData() {
+        FileOutputStream fileOutputStream;
+        ObjectOutputStream objectOutputStream;
+        try {
+            fileOutputStream = openFileOutput(filename, Context.MODE_PRIVATE);
+            objectOutputStream = new ObjectOutputStream(fileOutputStream);
+            objectOutputStream.writeObject(workouts);
+            objectOutputStream.close();
+            fileOutputStream.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadData() {
+        FileInputStream fileInputStream;
+        ObjectInputStream objectInputStream;
+        try {
+            fileInputStream = openFileInput(filename);
+            objectInputStream = new ObjectInputStream(fileInputStream);
+            ArrayList<WorkOutType> savedWorkouts;
+            savedWorkouts = (ArrayList<WorkOutType>) objectInputStream.readObject();
+            workouts = new ArrayList<>();
+            workouts = savedWorkouts;
+            if (!workouts.isEmpty()) {
+                startWorkout.setEnabled(true);
+                noPartsAdded.setText("");
+                lengthCount();
+            }
+            objectInputStream.close();
+            fileInputStream.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void lengthCount() {
+        timeInSeconds = 0;
+        minutes = 0;
+        seconds = 0;
+        for (int i = 0; i < workouts.size(); i++) {
+            final WorkOutType data = workouts.get(i);
+            timeInSeconds = timeInSeconds + data.getSeconds();
+        }
+        minutesTemp = (timeInSeconds % 3600) / 60;
+        secondsTemp = timeInSeconds % 60;
+        minutes = minutes + minutesTemp;
+        seconds = seconds + secondsTemp;
+        if (seconds > 59) {
+            minutes++;
+            seconds = seconds - 60;
+        }
+        total_length.setText("Total length " + minutes + " minutes " + seconds + " seconds.");
+    }
+
+    private void openDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Clear workouts")
+                .setMessage("Do you really want to clear workouts?")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        workouts.clear();
+                        lengthCount();
+                        adapter.notifyDataSetChanged();
+                        startWorkout.setEnabled(false);
+                    }
+                })
+                .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 }

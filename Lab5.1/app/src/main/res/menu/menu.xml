@@ -4,6 +4,6 @@
     <item android:id="@+id/menu_new_button"
         android:title="NEW"
         app:showAsAction="always" />
-    <item android:id="@+id/clear_button"
+    <item android:id="@+id/menu_clear_button"
         android:title="Clear"/>
 </menu>
