@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">HeatApp</string>
+    <string name="app_name">ToDo_APP</string>
+    <string name="action_settings">Settings</string>
 </resources>
