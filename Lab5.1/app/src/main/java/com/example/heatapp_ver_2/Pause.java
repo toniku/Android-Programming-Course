@@ -10,6 +10,11 @@ public class Pause extends WorkOutType {
         this.event = event;
     }
 
-    public String getEvent() {return event; }
-    public int getSeconds() { return seconds; }
+    public String getEvent() {
+        return event;
+    }
+
+    public int getSeconds() {
+        return seconds;
+    }
 }

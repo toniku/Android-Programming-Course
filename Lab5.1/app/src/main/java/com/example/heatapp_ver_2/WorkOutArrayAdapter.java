@@ -55,4 +55,3 @@ public class WorkOutArrayAdapter extends ArrayAdapter<WorkOutType> {
         return convertView;
     }
 }
-

@@ -1,6 +1,6 @@
 package com.example.heatapp_ver_2;
 
-import java.io.Serializable;
+        import java.io.Serializable;
 
 public abstract class WorkOutType implements Serializable {
 
