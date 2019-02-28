@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class CreateWorkOut extends AppCompatActivity {
 
@@ -19,6 +18,8 @@ public class CreateWorkOut extends AppCompatActivity {
         final RadioButton radioWorkOut = findViewById(R.id.radioBtnWorkOut);
         final RadioButton radioPause = findViewById(R.id.radioBtnPause);
 
+        // When user have created the workout or pause and taps addButton we get the time and activity type
+        // and use returnData function for returning these values to MainActivity
         findViewById(R.id.addButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
