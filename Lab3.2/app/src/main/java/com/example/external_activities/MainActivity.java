@@ -12,6 +12,7 @@ import java.net.URLEncoder;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private EditText url_text = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,25 +21,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.open_map_button).setOnClickListener(this);
         findViewById(R.id.create_call_button).setOnClickListener(this);
         findViewById(R.id.go_button).setOnClickListener(this);
-        EditText url_text = findViewById(R.id.url_field);
+        url_text = findViewById(R.id.url_field);
         url_text.setSelection(url_text.getText().length());
     }
 
     @Override
-    public void onClick(View view){
+    public void onClick(View view) {
 
-        if (view.getId() == R.id.open_map_button){
+        if (view.getId() == R.id.open_map_button) {
             Uri location = Uri.parse("geo:0,0?q=OAMK, Kotkantie 1, Oulu");
             Intent mapIntent = new Intent(Intent.ACTION_VIEW, location);
             startActivity(mapIntent);
-        }
-        else if (view.getId() == R.id.create_call_button){
+        } else if (view.getId() == R.id.create_call_button) {
             Uri number = Uri.parse("tel:+358 20 6110200");
             Intent callIntent = new Intent(Intent.ACTION_DIAL, number);
             startActivity(callIntent);
-        }
-        else if (view.getId() == R.id.go_button){
-            EditText url_text = findViewById(R.id.url_field);
+        } else if (view.getId() == R.id.go_button) {
             String url = url_text.getText().toString();
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setData(Uri.parse(url));
