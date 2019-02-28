@@ -1,47 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="390dp"
     android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Set reminder time"
         android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"/>
+        android:text="Set reminder time"
+        android:textSize="35dp" />
 
     <TimePicker
         android:id="@+id/timePicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:timePickerMode="spinner"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:timePickerMode="spinner" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Set reminder text"
-
         android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"/>
+        android:text="Set reminder text"
+        android:textSize="35dp" />
 
     <EditText
         android:id="@+id/reminder_text"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Write here your reminder text"
-        android:layout_gravity="center"/>
+        android:hint="Write here your reminder text"
+        android:textColor="@android:color/black"
+        android:textSize="20dp" />
 
     <Button
         android:id="@+id/done_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="DONE"
         android:layout_gravity="center"
-        android:layout_marginTop="5dp"/>
+        android:layout_marginTop="5dp"
+        android:text="DONE" />
 
 </LinearLayout>
