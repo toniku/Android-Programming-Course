@@ -22,29 +22,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu){
+    public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item){
+    public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);
         TextView text_color = findViewById(R.id.color_name);
-        if(item.getItemId() == R.id.red_menu_item){
+        if (item.getItemId() == R.id.red_menu_item) {
             findViewById(R.id.app_layout).setBackgroundColor(Color.RED);
             text_color.setText("RED");
-        }
-        else if(item.getItemId() == R.id.green_menu_item){
+        } else if (item.getItemId() == R.id.green_menu_item) {
             findViewById(R.id.app_layout).setBackgroundColor(Color.GREEN);
             text_color.setText("GREEN");
-        }
-        else if(item.getItemId() == R.id.blue_menu_item){
+        } else if (item.getItemId() == R.id.blue_menu_item) {
             findViewById(R.id.app_layout).setBackgroundColor(Color.BLUE);
             text_color.setText("BLUE");
-        }
-        else if(item.getItemId() == R.id.yellow_menu_item){
+        } else if (item.getItemId() == R.id.yellow_menu_item) {
             findViewById(R.id.app_layout).setBackgroundColor(Color.YELLOW);
             text_color.setText("YELLOW");
         }
