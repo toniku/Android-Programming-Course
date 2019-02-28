@@ -1,17 +1,15 @@
 package com.example.notepad_app;
 
-import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
 
-    EditText editField = null;
     static final String SHARED_PREF_FILE = "MyApp";
     static final String SHARED_PREF_EDITOR_TEXT_KEY = "EditorText";
+    EditText editField = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,10 +21,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        String text = editField.getText().toString();
         SharedPreferences sharedPreferences = getPref();
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(SHARED_PREF_EDITOR_TEXT_KEY, text);
+        editor.putString(SHARED_PREF_EDITOR_TEXT_KEY, editField.getText().toString());
         editor.commit();
     }
 
@@ -34,13 +31,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         SharedPreferences sharedPreferences = getPref();
-        String savedText = sharedPreferences.getString(SHARED_PREF_EDITOR_TEXT_KEY, null);
-        editField.setText(savedText);
+        editField.setText(sharedPreferences.getString(SHARED_PREF_EDITOR_TEXT_KEY, null));
     }
 
-    protected  SharedPreferences getPref() {
+    protected SharedPreferences getPref() {
         return getSharedPreferences(SHARED_PREF_FILE, MODE_PRIVATE);
     }
-
-
 }
