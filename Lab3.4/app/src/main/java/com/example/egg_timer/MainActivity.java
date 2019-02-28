@@ -21,7 +21,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         timeInSeconds.setSelection(timeInSeconds.getText().length());
     }
 
-
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.startButton) {

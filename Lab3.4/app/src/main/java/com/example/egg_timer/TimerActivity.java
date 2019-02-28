@@ -23,8 +23,8 @@ public class TimerActivity extends AppCompatActivity {
         Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         final MediaPlayer mp = MediaPlayer.create(getApplicationContext(), notification);
 
-        new CountDownTimer(Integer.parseInt(time)*1000,1000) {
-            public void onTick(long millisUntilFinished){
+        new CountDownTimer(Integer.parseInt(time) * 1000, 1000) {
+            public void onTick(long millisUntilFinished) {
                 timeCount.setText("" + millisUntilFinished / 1000);
             }
 
