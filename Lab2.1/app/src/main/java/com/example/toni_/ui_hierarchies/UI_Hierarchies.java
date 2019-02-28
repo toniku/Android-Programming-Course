@@ -12,9 +12,8 @@ import java.util.Arrays;
 
 public class UI_Hierarchies extends AppCompatActivity implements View.OnClickListener {
 
-    boolean containsText = false;
     ArrayList<String> countries = new ArrayList<>();
-    final String[] COUNTRIES = new String[]{ "Afghanistan", "Albania" };
+    final String[] COUNTRIES = new String[]{"Afghanistan", "Albania", "Finland", "Sweden"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,38 +27,37 @@ public class UI_Hierarchies extends AppCompatActivity implements View.OnClickLis
     }
 
     @Override
-    public void onClick(View view){
+    public void onClick(View view) {
         if (view.getId() == R.id.add_button) {
             addCountry();
-        }
-        else if (view.getId() == R.id.remove_button) {
+        } else if (view.getId() == R.id.remove_button) {
             removeCountry();
         }
     }
 
-    public void printCountries(){
-        ListView myListView = (ListView) findViewById(R.id.country_list_view);
+    public void printCountries() {
+        ListView myListView = findViewById(R.id.country_list_view);
         final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, countries);myListView.setAdapter(adapter);
+                android.R.layout.simple_list_item_1, countries);
+        myListView.setAdapter(adapter);
     }
 
-    public String getTextFieldText(){
+    public String getTextFieldText() {
         EditText editor = findViewById(R.id.text_editor);
         String text = editor.getText().toString();
         editor.setText(null);
         return text;
     }
 
-    public void addCountry(){
+    public void addCountry() {
         String name = getTextFieldText();
-        if (name != null && !name.isEmpty())
-        {
+        if (name != null && !name.isEmpty()) {
             countries.add(name);
             printCountries();
         }
     }
 
-    public void removeCountry(){
+    public void removeCountry() {
         String name = getTextFieldText();
         countries.remove(name);
         printCountries();
